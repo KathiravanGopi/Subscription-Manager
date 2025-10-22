@@ -6,3 +6,42 @@
     max-width: 100vw;
     max-height: 100vh;
 }
+body{
+    max-width: 100vw;
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+/* Prevent dropdown from causing horizontal overflow */
+.navbar-container {
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Ensure profile dropdown stays within viewport */
+.profile-dropdown {
+    position: absolute;
+    right: 0;
+    min-width: 12rem;
+    max-width: 90vw;
+}
+
+/* Prevent horizontal scroll on small screens */
+@media (max-width: 640px) {
+    .profile-dropdown {
+        right: 0.5rem;
+        max-width: calc(100vw - 1rem);
+    }
+}
+
+/* Ensure the main container doesn't expand */
+html, #root {
+    overflow-x: hidden;
+    height: 100vh;
+}
+
+/* Fix for potential width expansion */
+* {
+    box-sizing: border-box;
+}

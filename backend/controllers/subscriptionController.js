@@ -2,7 +2,8 @@ const Subscription = require('../models/Subscription');
 
 exports.list = async (req, res) => {
   try {
-    const filter = {} 
+    // Only return subscriptions for the authenticated user
+    const filter = { userId: req.user.id }
     const subs = await Subscription.find(filter).populate('category').lean();
     return res.json(subs);
   } catch (e) {
@@ -14,6 +15,7 @@ exports.create = async (req, res) => {
   try {
     const { name, category, price, billingCycle, startDate, nextBillingDate, notes, isActive } = req.body;
     const doc = await Subscription.create({
+      userId: req.user.id, // Associate subscription with authenticated user
       name,
       category: category || undefined,
       price,
@@ -36,7 +38,8 @@ exports.update = async (req, res) => {
     console.log(req.params);
     const { id } = req.params;
     const updates = req.body || {};
-    const query = { _id: id } 
+    // Only allow updating own subscriptions
+    const query = { _id: id, userId: req.user.id }
     const doc = await Subscription.findOneAndUpdate(query, updates, { new: true });
     if (!doc) return res.status(404).json({ message: 'Subscription not found' });
     return res.json(doc);
@@ -49,7 +52,8 @@ exports.remove = async (req, res) => {
   try {
     console.log(req.params);
     const { id } = req.params;
-    const query = { _id: id } 
+    // Only allow deleting own subscriptions
+    const query = { _id: id, userId: req.user.id }
     const doc = await Subscription.findOneAndDelete(query);
     if (!doc) return res.status(404).json({ message: 'Subscription not found' });
     return res.json({ success: true });

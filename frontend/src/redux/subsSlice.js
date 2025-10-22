@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
 import axios from 'axios'
-import { api_url } from '../Components/config/apiConfig';
+import { api_url } from '../config/apiConfig';
 
 
 export const fetchSubs=createAsyncThunk('subscriptions/fetchSubs',async()=>{
@@ -36,7 +36,6 @@ export const updateSubs=createAsyncThunk('subscriptions/updateSubs',async({id,su
 export const deleteSubs=createAsyncThunk('subscriptions/deleteSubs',async(id)=>{
     try{
         await axios.delete(`${api_url}/subscriptions/${id}`);
-        // Return the id we deleted so the reducer can remove it locally
         return { id };
     }catch(error){
         return Promise.reject(error.response?.data || 'Error deleting subscription');

@@ -1,28 +1,60 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
-import { register as registerThunk, selectAuthLoading, selectAuthError } from '../redux/authSlice'
+import { register as registerThunk, selectAuthLoading, selectAuthError, selectIsAuthenticated } from '../redux/authSlice'
 import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import LiquidEther from './LiquidEther'
 
 const Signup = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const loading = useSelector(selectAuthLoading)
     const error = useSelector(selectAuthError)
+    const isAuthenticated = useSelector(selectIsAuthenticated)
     const { handleSubmit, register, watch, formState: { errors } } = useForm()
 
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate('/view-subs');
+        }
+    }, [isAuthenticated, navigate]);
+
     const onSubmit = async (data) => {
-        const { email, password, confirmPassword } = data
-        if (password !== confirmPassword) return
-        const action = await dispatch(registerThunk({ email, password }))
+        const { username, email, password, confirmPassword } = data
+        if (password !== confirmPassword) {
+            toast.error('Passwords do not match!', {
+                position: 'top-right',
+                autoClose: 3000,
+            })
+            return
+        }
+        const action = await dispatch(registerThunk({ name: username, email, password }))
         if (registerThunk.fulfilled.match(action)) {
-            navigate('/login')
+            toast.success('Account created successfully! Welcome aboard.', {
+                position: 'top-right',
+                autoClose: 3000,
+            })
+            navigate('/view-subs')
+        } else {
+            toast.error(action.payload || 'Registration failed. Please try again.', {
+                position: 'top-right',
+                autoClose: 4000,
+            })
         }
     }
 
     return (
-        <section className="bg-gray-50 dark:bg-gray-900">
-            <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+        <section className="relative bg-gray-50 dark:bg-gray-900 overflow-hidden">
+            <div className="absolute inset-0 w-full h-full">
+                <LiquidEther 
+                    colors={['#5227FF', '#FF9FFC', '#B19EEF']} 
+                    mouseForce={20} 
+                    cursorSize={100} 
+                    autoDemo={true} 
+                />
+            </div>
+            <div className="relative flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 z-10">
                 <Link to="/" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
                     <img className="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo" />
                     Subscription Manager
@@ -34,6 +66,11 @@ const Signup = () => {
                         </h1>
                         {error && <p className="text-red-500 text-sm">{error}</p>}
                         <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit(onSubmit)} noValidate>
+                            <div>
+                                <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
+                                <input type="text" id="username" placeholder="Your name" {...register('username', { required: 'Username is required' })} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                                {errors.username && <p className="text-red-500 text-sm mt-1">{errors.username.message}</p>}
+                            </div>
                             <div>
                                 <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
                                 <input type="email" id="email" placeholder="name@company.com" {...register('email', { required: 'Email is required' })} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
@@ -60,7 +97,7 @@ const Signup = () => {
                                 </div>
                             </div>
                             {errors.terms && <p className="text-red-500 text-sm mt-1">{errors.terms.message}</p>}
-                                            <button type="submit" disabled={loading} className="relative w-full inline-flex items-center justify-center p-0.5 mb-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 disabled:opacity-70">
+                                            <button type="submit" disabled={loading} className="relative w-full inline-flex items-center justify-center p-0.5 mb-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 via-pink-500 to-purple-600 group-hover:from-purple-500 group-hover:via-pink-400 group-hover:to-purple-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 disabled:opacity-70 shadow-lg shadow-purple-500/50">
                                                 <span className="relative w-full px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-transparent group-hover:dark:bg-transparent text-center">
                                                     {loading ? 'Creating...' : 'Create an account'}
                                                 </span>

@@ -1,10 +1,12 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import Login from "./Components/Login";
 import Signup from "./Components/Signup";
 import FormContainer from "./Components/FormContainer";
 import Navbar from "./Components/Navbar";
 import Dashboard from "./Components/Dashboard";
 import Homepage from "./Components/Homepage";
+import Settings from "./Components/Settings";
+import ProtectedRoute from "./Components/ProtectedRoute";
 
 const router = createBrowserRouter([
     {
@@ -17,19 +19,29 @@ const router = createBrowserRouter([
     },
     {
         path:'/',
-        element:<Navbar/>,
+        element: <ProtectedRoute />,
         children:[
             {
-                index:true,
-                element:<Homepage/>
-            },
-            {
-                path:'addSubs',
-                element:<FormContainer/>
-            },
-            {
-                path:'view-subs',
-                element:<Dashboard/>
+                path: '',
+                element: <Navbar />,
+                children:[
+                    {
+                        index:true,
+                        element: <Navigate to="/view-subs" replace />
+                    },
+                    {
+                        path:'addSubs',
+                        element:<FormContainer/>
+                    },
+                    {
+                        path:'view-subs',
+                        element:<Dashboard/>
+                    },
+                    {
+                        path:'settings',
+                        element:<Settings/>
+                    }
+                ]
             }
         ]
     }
