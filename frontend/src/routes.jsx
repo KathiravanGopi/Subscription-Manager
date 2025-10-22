@@ -7,6 +7,7 @@ import Dashboard from "./Components/Dashboard";
 import Homepage from "./Components/Homepage";
 import Settings from "./Components/Settings";
 import ProtectedRoute from "./Components/ProtectedRoute";
+import TermsAndConditions from "./Components/TermsAndConditions";
 
 const router = createBrowserRouter([
     {
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
     {
         path: '/signup',
         element: <Signup />
+    },
+    {
+        path: '/terms',
+        element: <TermsAndConditions />
     },
     {
         path:'/',

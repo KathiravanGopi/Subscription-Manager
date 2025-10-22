@@ -93,7 +93,7 @@ const Signup = () => {
                                     <input id="terms" aria-describedby="terms" type="checkbox" {...register('terms', { required: 'Accept the terms' })} className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" />
                                 </div>
                                 <div className="ml-3 text-sm">
-                                    <label htmlFor="terms" className="font-light text-gray-500 dark:text-gray-300">I accept the <a className="font-medium text-primary-600 hover:underline dark:text-primary-500" href="#">Terms and Conditions</a></label>
+                                    <label htmlFor="terms" className="font-light text-gray-500 dark:text-gray-300">I accept the <Link to="/terms" target="_blank" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Terms and Conditions</Link></label>
                                 </div>
                             </div>
                             {errors.terms && <p className="text-red-500 text-sm mt-1">{errors.terms.message}</p>}

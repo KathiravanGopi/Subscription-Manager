@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { deleteSubs, fetchSubs, selectError, selectLoading, selectSubs, updateSubs } from '../redux/subsSlice'
 import { Link } from 'react-router-dom'
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
-import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
+import { ExclamationTriangleIcon, PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline'
 import { toast } from 'react-toastify'
 import LiquidEther from './LiquidEther'
 
@@ -211,9 +211,25 @@ const Dashboard = () => {
                                             <td className="px-6 py-4">{sub.notes || '-'}</td>
                                             <td className="px-6 py-4">{sub.isActive ? 'Yes' : 'No'}</td>
                                             <td className="px-6 py-4">
-                                                <div className="flex items-center gap-3">
-                                                    <button type="button" onClick={() => openEdit(sub)} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</button>
-                                                    <button type="button" onClick={() => openDelete(sub)} className="font-medium text-red-600 dark:text-red-400 hover:underline">Delete</button>
+                                                <div className="flex items-center gap-2">
+                                                    <button 
+                                                        type="button" 
+                                                        onClick={() => openEdit(sub)} 
+                                                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-blue-700 bg-blue-50 hover:bg-blue-100 dark:text-blue-400 dark:bg-blue-900/20 dark:hover:bg-blue-900/40 rounded-lg transition-colors"
+                                                        title="Edit Subscription"
+                                                    >
+                                                        <PencilSquareIcon className="w-4 h-4" />
+                                                        Edit
+                                                    </button>
+                                                    <button 
+                                                        type="button" 
+                                                        onClick={() => openDelete(sub)} 
+                                                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-red-700 bg-red-50 hover:bg-red-100 dark:text-red-400 dark:bg-red-900/20 dark:hover:bg-red-900/40 rounded-lg transition-colors"
+                                                        title="Delete Subscription"
+                                                    >
+                                                        <TrashIcon className="w-4 h-4" />
+                                                        Delete
+                                                    </button>
                                                 </div>
                                             </td>
                                         </tr>
