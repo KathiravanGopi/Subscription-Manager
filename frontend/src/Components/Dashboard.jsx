@@ -136,7 +136,8 @@ const Dashboard = () => {
                                         id="table-search-subscriptions"
                                         value={search}
                                         onChange={(e) => setSearch(e.target.value)}
-                                        className="block pb-2 pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        disabled={isEditOpen || isDeleteOpen}
+                                        className="block pb-2 pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
                                         placeholder="Search name, category, billing cycle, notes, or price..."
                                     />
                                 </div>
@@ -239,49 +240,101 @@ const Dashboard = () => {
 
                             </tbody>
                         </table>
-                        <div id="editUserModal" tabIndex="-1" aria-hidden={!isEditOpen} className={`fixed inset-0 z-[9999] ${isEditOpen ? 'flex' : 'hidden'} items-center justify-center w-full p-4 overflow-hidden`}>
-                            <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" onClick={closeEdit} />
-                            <div className="relative w-full max-w-2xl max-h-full">
-                                <form className="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
-                                    <div className="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600 border-gray-200">
-                                        <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-                                            Edit Subscription
-                                        </h3>
-                                        <button type="button" onClick={closeEdit} className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
-                                            <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                                            </svg>
-                                            <span className="sr-only">Close modal</span>
-                                        </button>
-                                    </div>
-                                    <div className="p-6 space-y-6">
-                                        <div className="grid grid-cols-6 gap-6">
-                                            <div className="col-span-6 sm:col-span-3">
-                                                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Subscription Name</label>
-                                                <input name="name" type="text" value={editForm.name} onChange={onChangeEdit} className="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:text-white" />
+                        {/* Edit Subscription Modal */}
+                        <Dialog open={isEditOpen} onClose={setIsEditOpen} className="relative z-[9999]">
+                            <DialogBackdrop
+                                transition
+                                className="fixed inset-0 bg-gray-900/50 backdrop-blur-sm transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
+                            />
+                            <div className="fixed inset-0 z-[9999] w-screen overflow-y-auto">
+                                <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                                    <DialogPanel
+                                        transition
+                                        className="relative transform overflow-hidden rounded-lg bg-gray-800 text-left shadow-xl outline -outline-offset-1 outline-white/10 transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-2xl data-closed:sm:translate-y-0 data-closed:sm:scale-95"
+                                    >
+                                        <div className="bg-gray-800 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                            <div className="sm:flex sm:items-start">
+                                                <div className="mt-3 text-center sm:mt-0 sm:text-left w-full">
+                                                    <DialogTitle as="h3" className="text-xl font-semibold text-white mb-6">
+                                                        Edit Subscription
+                                                    </DialogTitle>
+                                                    <div className="mt-4">
+                                                        <div className="grid grid-cols-6 gap-6">
+                                                            <div className="col-span-6 sm:col-span-3">
+                                                                <label className="block mb-2 text-sm font-medium text-white">Subscription Name</label>
+                                                                <input 
+                                                                    name="name" 
+                                                                    type="text" 
+                                                                    value={editForm.name} 
+                                                                    onChange={onChangeEdit} 
+                                                                    className="shadow-sm bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
+                                                                />
+                                                            </div>
+                                                            <div className="col-span-6 sm:col-span-3">
+                                                                <label className="block mb-2 text-sm font-medium text-white">Category</label>
+                                                                <select 
+                                                                    name="category" 
+                                                                    value={editForm.category} 
+                                                                    onChange={onChangeEdit} 
+                                                                    className="shadow-sm bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                                                >
+                                                                    <option value="">Select category</option>
+                                                                    <option value="Music">Music</option>
+                                                                    <option value="OTT">OTT</option>
+                                                                    <option value="Shopping Sites">Shopping Sites</option>
+                                                                    <option value="Clubs">Clubs</option>
+                                                                </select>
+                                                            </div>
+                                                            <div className="col-span-6 sm:col-span-3">
+                                                                <label className="block mb-2 text-sm font-medium text-white">Price</label>
+                                                                <input 
+                                                                    name="price" 
+                                                                    type="number" 
+                                                                    step="0.01" 
+                                                                    value={editForm.price} 
+                                                                    onChange={onChangeEdit} 
+                                                                    className="shadow-sm bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
+                                                                />
+                                                            </div>
+                                                            <div className="col-span-6 sm:col-span-3">
+                                                                <label className="block mb-2 text-sm font-medium text-white">Billing Cycle</label>
+                                                                <select 
+                                                                    name="billingCycle" 
+                                                                    value={editForm.billingCycle} 
+                                                                    onChange={onChangeEdit} 
+                                                                    className="shadow-sm bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                                                >
+                                                                    <option value="">Select billing cycle</option>
+                                                                    <option value="Weekly">Weekly</option>
+                                                                    <option value="Monthly">Monthly</option>
+                                                                    <option value="Yearly">Yearly</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div className="col-span-6 sm:col-span-3">
-                                                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
-                                                <input name="category" type="text" value={editForm.category} onChange={onChangeEdit} className="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:text-white" />
-                                            </div>
-                                            <div className="col-span-6 sm:col-span-3">
-                                                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
-                                                <input name="price" type="number" step="0.01" value={editForm.price} onChange={onChangeEdit} className="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:text-white" />
-                                            </div>
-                                            <div className="col-span-6 sm:col-span-3">
-                                                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Billing Cycle</label>
-                                                <input name="billingCycle" type="text" value={editForm.billingCycle} onChange={onChangeEdit} className="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:text-white" />
-                                            </div>
-                                            
                                         </div>
-                                    </div>
-                                    <div className="flex items-center p-6 space-x-3 rtl:space-x-reverse border-t border-gray-200 rounded-b dark:border-gray-600">
-                                        <button type="button" onClick={onSaveEdit} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save</button>
-                                        <button type="button" onClick={closeEdit} className="text-gray-700 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white dark:bg-gray-600 dark:hover:bg-gray-500 dark:focus:ring-gray-700">Cancel</button>
-                                    </div>
-                                </form>
+                                        <div className="bg-gray-700/25 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                                            <button
+                                                type="button"
+                                                onClick={onSaveEdit}
+                                                className="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-500 sm:ml-3 sm:w-auto"
+                                            >
+                                                Save Changes
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={closeEdit}
+                                                className="mt-3 inline-flex w-full justify-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20 sm:mt-0 sm:w-auto"
+                                            >
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    </DialogPanel>
+                                </div>
                             </div>
-                        </div>
+                        </Dialog>
                     </div>
                     {/* Delete Confirmation Modal */}
                     <Dialog open={isDeleteOpen} onClose={setIsDeleteOpen} className="relative z-[9999]">
