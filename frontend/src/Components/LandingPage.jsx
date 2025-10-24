@@ -46,10 +46,17 @@ const LandingPage = () => {
   return (
     <div className="relative min-h-screen bg-gray-50 dark:bg-gray-900 overflow-hidden">
       {/* Animated Background */}
-      <LiquidEther />
+      <div className="absolute inset-0 w-full h-full">
+        <LiquidEther 
+          colors={['#5227FF', '#FF9FFC', '#B19EEF']} 
+          mouseForce={20} 
+          cursorSize={100} 
+          autoDemo={true} 
+        />
+      </div>
 
       {/* Navigation */}
-      <nav className="relative z-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700">
+      <nav className="relative z-10 bg-white/10 dark:bg-gray-800/10 backdrop-blur-md border-b border-white/20 dark:border-gray-700/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
@@ -58,20 +65,20 @@ const LandingPage = () => {
                 src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
                 alt="Logo"
               />
-              <span className="text-xl font-bold text-gray-900 dark:text-white">
+              <span className="text-xl font-bold text-white dark:text-white">
                 Subscription Manager
               </span>
             </div>
             <div className="flex items-center space-x-4">
               <Link
                 to="/login"
-                className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors"
+                className="text-white/90 dark:text-gray-200 hover:text-white dark:hover:text-white font-medium transition-colors"
               >
                 Login
               </Link>
               <Link
                 to="/signup"
-                className="px-6 py-2 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-xl"
+                className="px-6 py-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white font-medium rounded-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-xl border border-white/30"
               >
                 Get Started
               </Link>
@@ -84,21 +91,21 @@ const LandingPage = () => {
       <section className="relative z-10 pt-20 pb-32 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">
           <div className="flex justify-center mb-6">
-            <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 font-medium">
+            <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/20 dark:bg-primary-900/30 backdrop-blur-md text-white dark:text-primary-200 font-medium border border-white/30">
               <SparklesIcon className="w-5 h-5 mr-2" />
               Free Forever
             </div>
           </div>
           
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 dark:text-white mb-6 leading-tight">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white dark:text-white mb-6 leading-tight drop-shadow-lg">
             Take Control of Your
             <br />
-            <span className="bg-gradient-to-r from-primary-600 to-purple-600 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-300 bg-clip-text text-transparent">
               Subscriptions
             </span>
           </h1>
           
-          <p className="text-xl sm:text-2xl text-gray-600 dark:text-gray-300 mb-10 max-w-3xl mx-auto">
+          <p className="text-xl sm:text-2xl text-white/90 dark:text-gray-200 mb-10 max-w-3xl mx-auto drop-shadow-md">
             Track, manage, and optimize all your subscriptions in one place. 
             Never miss a payment or renewal date again.
           </p>
@@ -106,14 +113,14 @@ const LandingPage = () => {
           <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
             <Link
               to="/signup"
-              className="w-full sm:w-auto px-8 py-4 bg-primary-600 hover:bg-primary-700 text-white text-lg font-semibold rounded-lg transition-all transform hover:scale-105 shadow-xl hover:shadow-2xl flex items-center justify-center"
+              className="w-full sm:w-auto px-8 py-4 bg-white/25 hover:bg-white/35 backdrop-blur-md text-white text-lg font-semibold rounded-lg transition-all transform hover:scale-105 shadow-xl hover:shadow-2xl flex items-center justify-center border border-white/30"
             >
               Start Free Now
               <ArrowRightIcon className="w-5 h-5 ml-2" />
             </Link>
             <Link
               to="/login"
-              className="w-full sm:w-auto px-8 py-4 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white text-lg font-semibold rounded-lg border-2 border-gray-300 dark:border-gray-600 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl"
+              className="w-full sm:w-auto px-8 py-4 bg-white/15 dark:bg-gray-800/15 hover:bg-white/25 dark:hover:bg-gray-700/25 backdrop-blur-md text-white dark:text-white text-lg font-semibold rounded-lg border-2 border-white/40 dark:border-gray-400/40 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl"
             >
               Sign In
             </Link>
@@ -121,30 +128,30 @@ const LandingPage = () => {
 
           {/* Stats */}
           <div className="mt-20 grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl p-6 shadow-lg">
-              <div className="text-4xl font-bold text-primary-600 dark:text-primary-400 mb-2">100%</div>
-              <div className="text-gray-600 dark:text-gray-300 font-medium">Free to Use</div>
+            <div className="bg-white/20 dark:bg-gray-800/20 backdrop-blur-md rounded-xl p-6 shadow-lg border border-white/30 dark:border-gray-700/30">
+              <div className="text-4xl font-bold text-white dark:text-white mb-2">100%</div>
+              <div className="text-white/90 dark:text-gray-200 font-medium">Free to Use</div>
             </div>
-            <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl p-6 shadow-lg">
-              <div className="text-4xl font-bold text-primary-600 dark:text-primary-400 mb-2">24/7</div>
-              <div className="text-gray-600 dark:text-gray-300 font-medium">Access Anytime</div>
+            <div className="bg-white/20 dark:bg-gray-800/20 backdrop-blur-md rounded-xl p-6 shadow-lg border border-white/30 dark:border-gray-700/30">
+              <div className="text-4xl font-bold text-white dark:text-white mb-2">24/7</div>
+              <div className="text-white/90 dark:text-gray-200 font-medium">Access Anytime</div>
             </div>
-            <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl p-6 shadow-lg">
-              <div className="text-4xl font-bold text-primary-600 dark:text-primary-400 mb-2">∞</div>
-              <div className="text-gray-600 dark:text-gray-300 font-medium">Unlimited Subscriptions</div>
+            <div className="bg-white/20 dark:bg-gray-800/20 backdrop-blur-md rounded-xl p-6 shadow-lg border border-white/30 dark:border-gray-700/30">
+              <div className="text-4xl font-bold text-white dark:text-white mb-2">∞</div>
+              <div className="text-white/90 dark:text-gray-200 font-medium">Unlimited Subscriptions</div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="relative z-10 py-20 px-4 sm:px-6 lg:px-8 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
+      <section className="relative z-10 py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white dark:text-white mb-4">
               Everything You Need
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300">
+            <p className="text-xl text-white/90 dark:text-gray-200">
               Powerful features to manage your subscriptions effortlessly
             </p>
           </div>
@@ -153,15 +160,15 @@ const LandingPage = () => {
             {features.map((feature, index) => (
               <div
                 key={index}
-                className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2 border border-gray-200 dark:border-gray-700"
+                className="bg-white/15 dark:bg-gray-800/15 backdrop-blur-md rounded-xl p-6 shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2 border border-white/30 dark:border-gray-700/30"
               >
-                <div className="w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center mb-4">
-                  <feature.icon className="w-6 h-6 text-primary-600 dark:text-primary-400" />
+                <div className="w-12 h-12 bg-primary-500/30 dark:bg-primary-900/40 backdrop-blur-sm rounded-lg flex items-center justify-center mb-4 border border-white/20">
+                  <feature.icon className="w-6 h-6 text-white dark:text-primary-200" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+                <h3 className="text-xl font-bold text-white dark:text-white mb-2">
                   {feature.title}
                 </h3>
-                <p className="text-gray-600 dark:text-gray-300">
+                <p className="text-white/80 dark:text-gray-200">
                   {feature.description}
                 </p>
               </div>
@@ -173,7 +180,7 @@ const LandingPage = () => {
       {/* Benefits Section */}
       <section className="relative z-10 py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto">
-          <div className="bg-gradient-to-br from-primary-600 to-purple-600 rounded-2xl p-8 sm:p-12 shadow-2xl">
+          <div className="bg-gradient-to-br from-primary-600/80 to-purple-600/80 backdrop-blur-md rounded-2xl p-8 sm:p-12 shadow-2xl border border-white/30">
             <div className="text-center mb-12">
               <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
                 Why Choose Subscription Manager?
@@ -187,9 +194,9 @@ const LandingPage = () => {
               {benefits.map((benefit, index) => (
                 <div
                   key={index}
-                  className="flex items-start space-x-3 bg-white/10 backdrop-blur-sm rounded-lg p-4 hover:bg-white/20 transition-all"
+                  className="flex items-start space-x-3 bg-white/15 backdrop-blur-sm rounded-lg p-4 hover:bg-white/25 transition-all border border-white/20"
                 >
-                  <CheckCircleIcon className="w-6 h-6 text-primary-200 flex-shrink-0 mt-0.5" />
+                  <CheckCircleIcon className="w-6 h-6 text-white flex-shrink-0 mt-0.5" />
                   <span className="text-white font-medium">{benefit}</span>
                 </div>
               ))}
@@ -228,9 +235,9 @@ const LandingPage = () => {
       </section>
 
       {/* Footer */}
-      <footer className="relative z-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-t border-gray-200 dark:border-gray-700 py-8">
+      <footer className="relative z-10 bg-white/10 dark:bg-gray-800/10 backdrop-blur-md border-t border-white/20 dark:border-gray-700/30 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className="text-white/80 dark:text-gray-200">
             © 2025 Subscription Manager. Built with ❤️ for better subscription management.
           </p>
         </div>
