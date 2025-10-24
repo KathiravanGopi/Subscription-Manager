@@ -10,18 +10,24 @@ const signToken = (user) =>
   });
 
 // Cookie options for cross-site authentication
-const getCookieOptions = () => ({
-  httpOnly: true,
-  secure: true, // Always true for HTTPS
-  sameSite: 'none', // Required for cross-domain cookies
-  maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
-});
+const getCookieOptions = () => {
+  const isProduction = process.env.NODE_ENV === 'production';
+  return {
+    httpOnly: true,
+    secure: isProduction, // Must be true for sameSite: 'none'
+    sameSite: isProduction ? 'none' : 'lax', // 'none' for production (cross-domain), 'lax' for local
+    maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+  };
+};
 
-const getClearCookieOptions = () => ({
-  httpOnly: true,
-  secure: true,
-  sameSite: 'none'
-});
+const getClearCookieOptions = () => {
+  const isProduction = process.env.NODE_ENV === 'production';
+  return {
+    httpOnly: true,
+    secure: isProduction,
+    sameSite: isProduction ? 'none' : 'lax'
+  };
+};
 
 exports.register = async (req, res) => {
   try {
