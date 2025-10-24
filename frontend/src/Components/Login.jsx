@@ -37,7 +37,7 @@ const Login = () => {
     }
     return (
         <>
-            <section className="relative bg-gray-50 dark:bg-gray-900 overflow-hidden">
+            <section className="relative bg-gray-50 dark:bg-gray-900 min-h-screen overflow-hidden">
                 <div className="absolute inset-0 w-full h-full">
                     <LiquidEther 
                         colors={['#5227FF', '#FF9FFC', '#B19EEF']} 
@@ -46,18 +46,18 @@ const Login = () => {
                         autoDemo={true} 
                     />
                 </div>
-                <div className="relative flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 z-10">
-                    <Link to="/addSubs" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-                        <img className="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo" />
+                <div className="relative flex flex-col items-center justify-center px-4 sm:px-6 py-8 mx-auto min-h-screen lg:py-0 z-10">
+                    <p className="flex items-center mb-4 sm:mb-6 text-xl sm:text-2xl font-semibold text-gray-900 dark:text-white">
+                        <img className="w-6 h-6 sm:w-8 sm:h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo" />
                         Subscription Manager
-                    </Link>
+                    </p>
                     <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-                        <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                        <div className="p-4 sm:p-8 space-y-3 sm:space-y-4 md:space-y-6">
+                            <h1 className="text-lg sm:text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                                 Login
                             </h1>
                             {error && <p className="text-red-500 text-sm">{error}</p>}
-                            <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit(submit)} noValidate>
+                            <form className="space-y-3 sm:space-y-4 md:space-y-6" onSubmit={handleSubmit(submit)} noValidate>
                                 <div>
                                     <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
                                     <input type="text" {...register('email', { required: 'Email is required' })} id="email" className="bg-gray-50 border border-purple-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-gray-700 dark:border-purple-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500" placeholder="name@company.com" />

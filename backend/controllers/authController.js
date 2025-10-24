@@ -206,12 +206,18 @@ exports.sendPasswordResetOTP = async (req, res) => {
     });
     
     // Send OTP via email
+    console.log(`[Password Reset] Attempting to send OTP to ${user.email}`);
     const emailResult = await sendOTPEmail(user.email, otp, 'password-reset');
     
     if (!emailResult.success) {
-      return res.status(500).json({ message: 'Failed to send OTP email' });
+      console.error('[Password Reset] Email sending failed:', emailResult.error);
+      return res.status(500).json({ 
+        message: 'Failed to send OTP email', 
+        error: emailResult.error 
+      });
     }
     
+    console.log('[Password Reset] OTP email sent successfully');
     return res.json({ message: 'OTP sent to your email' });
   } catch (e) {
     console.error('Send password reset OTP error:', e);
@@ -300,12 +306,18 @@ exports.sendEmailUpdateOTP = async (req, res) => {
     });
     
     // Send OTP to current email
+    console.log(`[Email Update] Attempting to send OTP to ${user.email}`);
     const emailResult = await sendOTPEmail(user.email, otp, 'email-update');
     
     if (!emailResult.success) {
-      return res.status(500).json({ message: 'Failed to send OTP email' });
+      console.error('[Email Update] Email sending failed:', emailResult.error);
+      return res.status(500).json({ 
+        message: 'Failed to send OTP email', 
+        error: emailResult.error 
+      });
     }
     
+    console.log('[Email Update] OTP email sent successfully');
     return res.json({ message: 'OTP sent to your current email' });
   } catch (e) {
     console.error('Send email update OTP error:', e);
