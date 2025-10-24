@@ -43,10 +43,6 @@ axiosInstance.interceptors.response.use(
         if (typeof localStorage !== 'undefined') {
           localStorage.removeItem('auth_user')
         }
-        // Redirect to login if not already there
-        if (!window.location.pathname.includes('/login') && !window.location.pathname.includes('/signup')) {
-          window.location.href = '/login'
-        }
       }
       
       // Handle 403 Forbidden
@@ -58,7 +54,7 @@ axiosInstance.interceptors.response.use(
     } else {
       console.error('❌ Error:', error.message)
     }
-    
+    //hello
     return Promise.reject(error)
   }
 )
