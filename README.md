@@ -350,7 +350,7 @@ Navigate to **`http://localhost:5173`** in your browser 🎉
    Category: Entertainment
    Price: 15.99
    Billing Cycle: Monthly
-   Start Date: 2024-01-01
+   Start Date: 2025-01-01
    Notes: Family plan (optional)
    ```
 3. Click **"Add Subscription"**
@@ -550,7 +550,7 @@ Cookie: token=<jwt_token>
   "category": "Entertainment",
   "price": 15.99,
   "billingCycle": "Monthly",
-  "startDate": "2024-01-01",
+  "startDate": "2025-01-01",
   "notes": "Family plan"
 }
 ```
@@ -693,7 +693,7 @@ This project is licensed under the **MIT License**.
 ```
 MIT License
 
-Copyright (c) 2024 Kathiravan Gopi
+Copyright (c) 2025 Kathiravan Gopi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -822,6 +822,6 @@ If this project helped you, please consider:
 
 ---
 
-*Last Updated: October 2024*
+*Last Updated: October 2025*
 
 </div>
