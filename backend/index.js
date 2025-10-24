@@ -16,7 +16,7 @@ var app = express();
 
 app.use(logger('dev'));
 app.use(cors({
-  origin: 'http://localhost:5173', // Frontend URL
+  origin: ['https://subscription-manager-frontend.onrender.com',], // Frontend URL
   credentials: true
 }));
 app.use(express.json());
