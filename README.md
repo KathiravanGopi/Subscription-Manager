@@ -768,7 +768,7 @@ Special thanks to these amazing projects and resources:
 ### Kathiravan Gopi
 
 [![GitHub](https://img.shields.io/badge/GitHub-KathiravanGopi-181717?style=for-the-badge&logo=github)](https://github.com/KathiravanGopi)
-[![Email](https://img.shields.io/badge/Email-kathiravangopi12%40gmail.com-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:kathiravangopi12@gmail.com)
+[![Email](https://img.shields.io/badge/Email-kathiravangopi23%40gmail.com-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:kathiravangopi23@gmail.com)
 
 **Full Stack Developer | MERN Specialist | UI/UX Enthusiast**
 
@@ -783,7 +783,7 @@ Special thanks to these amazing projects and resources:
 - 📖 **Documentation**: Check this README and other docs
 - 🐛 **Issues**: [Report bugs](https://github.com/KathiravanGopi/Subscription-Manager/issues)
 - 💬 **Discussions**: [GitHub Discussions](https://github.com/KathiravanGopi/Subscription-Manager/discussions)
-- 📧 **Email**: kathiravangopi12@gmail.com
+- 📧 **Email**: kathiravangopi23@gmail.com
 
 ### Show Your Support
 
