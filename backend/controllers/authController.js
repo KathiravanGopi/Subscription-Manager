@@ -9,6 +9,20 @@ const signToken = (user) =>
     expiresIn: '7d',
   });
 
+// Cookie options for cross-site authentication
+const getCookieOptions = () => ({
+  httpOnly: true,
+  secure: true, // Always true for HTTPS
+  sameSite: 'none', // Required for cross-domain cookies
+  maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+});
+
+const getClearCookieOptions = () => ({
+  httpOnly: true,
+  secure: true,
+  sameSite: 'none'
+});
+
 exports.register = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
@@ -20,12 +34,7 @@ exports.register = async (req, res) => {
     const token = signToken(user);
     
     // Set HTTP-only cookie
-    res.cookie('auth_token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
-    });
+    res.cookie('auth_token', token, getCookieOptions());
     
     return res.status(201).json({ user: { id: user._id, email: user.email, role: user.role, name: user.name } });
   } catch (e) {
@@ -43,12 +52,7 @@ exports.login = async (req, res) => {
     const token = signToken(user);
     
     // Set HTTP-only cookie
-    res.cookie('auth_token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
-    });
+    res.cookie('auth_token', token, getCookieOptions());
     
     return res.json({ user: { id: user._id, email: user.email, role: user.role, name: user.name } });
   } catch (e) {
@@ -58,11 +62,7 @@ exports.login = async (req, res) => {
 
 exports.logout = async (req, res) => {
   try {
-    res.clearCookie('auth_token', {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax'
-    });
+    res.clearCookie('auth_token', getClearCookieOptions());
     return res.json({ message: 'Logged out successfully' });
   } catch (e) {
     return res.status(500).json({ message: 'Logout failed' });
@@ -135,11 +135,7 @@ exports.resetUsername = async (req, res) => {
     await user.save();
     
     // Clear the auth cookie to force re-login
-    res.clearCookie('auth_token', {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax'
-    });
+    res.clearCookie('auth_token', getClearCookieOptions());
     
     return res.json({ message: 'Email updated successfully' });
   } catch (e) {
@@ -158,11 +154,7 @@ exports.deleteAccount = async (req, res) => {
     await User.findByIdAndDelete(req.user.id);
     
     // Clear the auth cookie
-    res.clearCookie('auth_token', {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax'
-    });
+    res.clearCookie('auth_token', getClearCookieOptions());
     
     return res.json({ message: 'Account deleted successfully' });
   } catch (e) {
@@ -340,11 +332,7 @@ exports.verifyOTPAndUpdateEmail = async (req, res) => {
     await OTP.deleteOne({ _id: otpRecord._id });
     
     // Clear the auth cookie to force re-login
-    res.clearCookie('auth_token', {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax'
-    });
+    res.clearCookie('auth_token', getClearCookieOptions());
     
     return res.json({ message: 'Email updated successfully' });
   } catch (e) {

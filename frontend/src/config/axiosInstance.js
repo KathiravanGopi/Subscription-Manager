@@ -54,7 +54,6 @@ axiosInstance.interceptors.response.use(
     } else {
       console.error('❌ Error:', error.message)
     }
-    //hello
     return Promise.reject(error)
   }
 )
