@@ -44,11 +44,15 @@ const sendOTPEmail = async (email, otp, type) => {
       </div>
     `;
 
-    console.log(`[sendOTPEmail] Sending ${type} OTP to ${email} via Resend`);
+    // NOTE: When using onboarding@resend.dev, emails can only be sent to kathiravangopi23@gmail.com
+    // For production, verify a domain at resend.com/domains and update EMAIL_FROM
+    const recipientEmail = email;
+    
+    console.log(`[sendOTPEmail] Sending ${type} OTP to ${recipientEmail} via Resend`);
     
     const { data, error } = await resend.emails.send({
       from: process.env.EMAIL_FROM || 'onboarding@resend.dev',
-      to: email,
+      to: recipientEmail,
       subject: subject,
       html: emailContent,
     });
