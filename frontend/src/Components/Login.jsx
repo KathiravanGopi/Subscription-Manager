@@ -16,7 +16,7 @@ const Login = () => {
 
     useEffect(() => {
         if (isAuthenticated) {
-            navigate('/view-subs');
+            navigate('/dashboard/view-subs');
         }
     }, [isAuthenticated, navigate]);
 
@@ -27,7 +27,7 @@ const Login = () => {
                 position: 'top-right',
                 autoClose: 3000,
             })
-            navigate('/view-subs')
+            navigate('/dashboard/view-subs')
         } else {
             toast.error(action.payload || 'Login failed. Please check your credentials.', {
                 position: 'top-right',

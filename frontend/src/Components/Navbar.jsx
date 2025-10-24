@@ -27,7 +27,7 @@ export default function Navbar() {
         autoClose: 2000,
       })
       setIsLogoutModalOpen(false);
-      navigate('/login');
+      navigate('/');
     } else {
       toast.error('Logout failed. Please try again.', {
         position: 'top-right',
@@ -45,9 +45,9 @@ export default function Navbar() {
 
   // Navigation items for PillNav
   const navItems = [
-    { label: 'Dashboard', href: '/view-subs' },
-    { label: 'Add Subscription', href: '/addSubs' },
-    { label: 'Settings', href: '/settings' },
+    { label: 'Dashboard', href: '/dashboard/view-subs' },
+    { label: 'Add Subscription', href: '/dashboard/addSubs' },
+    { label: 'Settings', href: '/dashboard/settings' },
     { 
       label: 'Sign Out', 
       href: '#logout',

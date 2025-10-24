@@ -5,11 +5,16 @@ import FormContainer from "./Components/FormContainer";
 import Navbar from "./Components/Navbar";
 import Dashboard from "./Components/Dashboard";
 import Homepage from "./Components/Homepage";
+import LandingPage from "./Components/LandingPage";
 import Settings from "./Components/Settings";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import TermsAndConditions from "./Components/TermsAndConditions";
 
 const router = createBrowserRouter([
+    {
+        path: '/',
+        element: <LandingPage />
+    },
     {
         path: '/login',
         element: <Login />
@@ -23,7 +28,7 @@ const router = createBrowserRouter([
         element: <TermsAndConditions />
     },
     {
-        path:'/',
+        path:'/dashboard',
         element: <ProtectedRoute />,
         children:[
             {
@@ -32,7 +37,7 @@ const router = createBrowserRouter([
                 children:[
                     {
                         index:true,
-                        element: <Navigate to="/view-subs" replace />
+                        element: <Navigate to="/dashboard/view-subs" replace />
                     },
                     {
                         path:'addSubs',

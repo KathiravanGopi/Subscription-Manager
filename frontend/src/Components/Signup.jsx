@@ -16,7 +16,7 @@ const Signup = () => {
 
     useEffect(() => {
         if (isAuthenticated) {
-            navigate('/view-subs');
+            navigate('/dashboard/view-subs');
         }
     }, [isAuthenticated, navigate]);
 
@@ -35,7 +35,7 @@ const Signup = () => {
                 position: 'top-right',
                 autoClose: 3000,
             })
-            navigate('/view-subs')
+            navigate('/dashboard/view-subs')
         } else {
             toast.error(action.payload || 'Registration failed. Please try again.', {
                 position: 'top-right',
