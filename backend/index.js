@@ -16,7 +16,7 @@ var app = express();
 
 app.use(logger('dev'));
 app.use(cors({
-  origin: ['https://subscription-manager-frontend.onrender.com',], // Frontend URL
+  origin: ['https://subscription-manager-frontend.onrender.com','https://subscriptionmanager.netlify.app'], // Frontend URL
   credentials: true
 }));
 app.use(express.json());
