@@ -8,7 +8,11 @@ const storedUser = typeof localStorage !== 'undefined' ? localStorage.getItem('a
 export const login = createAsyncThunk('auth/login', async (credentials, { rejectWithValue }) => {
   try {
     const res = await axiosInstance.post('/auth/login', credentials)
-    return res.data // expected { user }
+    // Store token in localStorage for persistence
+    if (res.data.token) {
+      localStorage.setItem('auth_token', res.data.token)
+    }
+    return res.data // expected { user, token }
   } catch (err) {
     const msg = err.response?.data?.message || 'Login failed'
     return rejectWithValue(msg)
@@ -18,7 +22,11 @@ export const login = createAsyncThunk('auth/login', async (credentials, { reject
 export const register = createAsyncThunk('auth/register', async (payload, { rejectWithValue }) => {
   try {
     const res = await axiosInstance.post('/auth/register', payload)
-    return res.data // expected { user }
+    // Store token in localStorage for persistence
+    if (res.data.token) {
+      localStorage.setItem('auth_token', res.data.token)
+    }
+    return res.data // expected { user, token }
   } catch (err) {
     const msg = err.response?.data?.message || 'Registration failed'
     return rejectWithValue(msg)
@@ -28,8 +36,12 @@ export const register = createAsyncThunk('auth/register', async (payload, { reje
 export const logoutUser = createAsyncThunk('auth/logout', async (_, { rejectWithValue }) => {
   try {
     await axiosInstance.post('/auth/logout')
+    // Clear token from localStorage
+    localStorage.removeItem('auth_token')
     return true
   } catch (err) {
+    // Clear token even if logout request fails
+    localStorage.removeItem('auth_token')
     const msg = err.response?.data?.message || 'Logout failed'
     return rejectWithValue(msg)
   }

@@ -16,6 +16,12 @@ axiosInstance.interceptors.request.use(
     // Ensure credentials are always sent
     config.withCredentials = true
     
+    // Get token from localStorage and add to Authorization header
+    const token = localStorage.getItem('auth_token')
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`
+    }
+    
     console.log(`🚀 ${config.method.toUpperCase()} ${config.url}`)
     return config
   },
@@ -42,6 +48,11 @@ axiosInstance.interceptors.response.use(
         // Clear local storage
         if (typeof localStorage !== 'undefined') {
           localStorage.removeItem('auth_user')
+          localStorage.removeItem('auth_token') // Clear token too
+        }
+        // Redirect to login if not already there
+        if (!window.location.pathname.includes('/login') && !window.location.pathname.includes('/signup')) {
+          window.location.href = '/login'
         }
       }
       
