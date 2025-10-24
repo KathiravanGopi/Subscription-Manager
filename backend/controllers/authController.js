@@ -38,6 +38,7 @@ exports.register = async (req, res) => {
     
     return res.status(201).json({ user: { id: user._id, email: user.email, role: user.role, name: user.name } });
   } catch (e) {
+    console.error('Registration error:', e);
     return res.status(500).json({ message: 'Registration failed' });
   }
 };
@@ -56,6 +57,7 @@ exports.login = async (req, res) => {
     
     return res.json({ user: { id: user._id, email: user.email, role: user.role, name: user.name } });
   } catch (e) {
+    console.error('Login error:', e);
     return res.status(500).json({ message: 'Login failed' });
   }
 };
