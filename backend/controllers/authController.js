@@ -11,21 +11,19 @@ const signToken = (user) =>
 
 // Cookie options for cross-site authentication
 const getCookieOptions = () => {
-  const isProduction = process.env.NODE_ENV === 'production';
   return {
     httpOnly: true,
-    secure: isProduction, // Must be true for sameSite: 'none'
-    sameSite: isProduction ? 'none' : 'lax', // 'none' for production (cross-domain), 'lax' for local
-    maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+    secure: true,
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    path: '/'
   };
 };
 
 const getClearCookieOptions = () => {
-  const isProduction = process.env.NODE_ENV === 'production';
   return {
     httpOnly: true,
-    secure: isProduction,
-    sameSite: isProduction ? 'none' : 'lax'
+    secure: true,
+    path: '/'
   };
 };
 
