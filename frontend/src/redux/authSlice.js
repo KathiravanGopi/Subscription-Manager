@@ -1,16 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import axios from 'axios'
+import axiosInstance from '../config/axiosInstance'
 import { api_url } from '../config/apiConfig'
-
-// Configure axios to send cookies with requests
-axios.defaults.withCredentials = true
 
 // Bootstrap from localStorage (only user data, not token)
 const storedUser = typeof localStorage !== 'undefined' ? localStorage.getItem('auth_user') : null
 
 export const login = createAsyncThunk('auth/login', async (credentials, { rejectWithValue }) => {
   try {
-    const res = await axios.post(`${api_url}/auth/login`, credentials)
+    const res = await axiosInstance.post('/auth/login', credentials)
     return res.data // expected { user }
   } catch (err) {
     const msg = err.response?.data?.message || 'Login failed'
@@ -20,7 +17,7 @@ export const login = createAsyncThunk('auth/login', async (credentials, { reject
 
 export const register = createAsyncThunk('auth/register', async (payload, { rejectWithValue }) => {
   try {
-    const res = await axios.post(`${api_url}/auth/register`, payload)
+    const res = await axiosInstance.post('/auth/register', payload)
     return res.data // expected { user }
   } catch (err) {
     const msg = err.response?.data?.message || 'Registration failed'
@@ -30,7 +27,7 @@ export const register = createAsyncThunk('auth/register', async (payload, { reje
 
 export const logoutUser = createAsyncThunk('auth/logout', async (_, { rejectWithValue }) => {
   try {
-    await axios.post(`${api_url}/auth/logout`)
+    await axiosInstance.post('/auth/logout')
     return true
   } catch (err) {
     const msg = err.response?.data?.message || 'Logout failed'
@@ -40,7 +37,7 @@ export const logoutUser = createAsyncThunk('auth/logout', async (_, { rejectWith
 
 export const checkAuth = createAsyncThunk('auth/check', async (_, { rejectWithValue }) => {
   try {
-    const res = await axios.get(`${api_url}/auth/check`)
+    const res = await axiosInstance.get('/auth/check')
     return res.data // expected { user }
   } catch (err) {
     const msg = err.response?.data?.message || 'Authentication check failed'
@@ -50,7 +47,7 @@ export const checkAuth = createAsyncThunk('auth/check', async (_, { rejectWithVa
 
 export const resetPassword = createAsyncThunk('auth/resetPassword', async (passwordData, { rejectWithValue }) => {
   try {
-    const res = await axios.put(`${api_url}/auth/reset-password`, passwordData)
+    const res = await axiosInstance.put('/auth/reset-password', passwordData)
     return res.data // expected { message }
   } catch (err) {
     const msg = err.response?.data?.message || 'Failed to reset password'
@@ -60,7 +57,7 @@ export const resetPassword = createAsyncThunk('auth/resetPassword', async (passw
 
 export const resetUsername = createAsyncThunk('auth/resetUsername', async (emailData, { rejectWithValue }) => {
   try {
-    const res = await axios.put(`${api_url}/auth/reset-username`, emailData)
+    const res = await axiosInstance.put('/auth/reset-username', emailData)
     return res.data // expected { message }
   } catch (err) {
     const msg = err.response?.data?.message || 'Failed to reset username'
@@ -70,7 +67,7 @@ export const resetUsername = createAsyncThunk('auth/resetUsername', async (email
 
 export const deleteAccount = createAsyncThunk('auth/deleteAccount', async (_, { rejectWithValue }) => {
   try {
-    const res = await axios.delete(`${api_url}/auth/delete-account`)
+    const res = await axiosInstance.delete('/auth/delete-account')
     return res.data // expected { message }
   } catch (err) {
     const msg = err.response?.data?.message || 'Failed to delete account'
@@ -80,7 +77,7 @@ export const deleteAccount = createAsyncThunk('auth/deleteAccount', async (_, { 
 
 export const sendPasswordResetOTP = createAsyncThunk('auth/sendPasswordResetOTP', async (data, { rejectWithValue }) => {
   try {
-    const res = await axios.post(`${api_url}/auth/send-password-reset-otp`, data)
+    const res = await axiosInstance.post('/auth/send-password-reset-otp', data)
     return res.data // expected { message }
   } catch (err) {
     const msg = err.response?.data?.message || 'Failed to send OTP'
@@ -90,7 +87,7 @@ export const sendPasswordResetOTP = createAsyncThunk('auth/sendPasswordResetOTP'
 
 export const verifyPasswordResetOTP = createAsyncThunk('auth/verifyPasswordResetOTP', async (data, { rejectWithValue }) => {
   try {
-    const res = await axios.post(`${api_url}/auth/verify-password-reset-otp`, data)
+    const res = await axiosInstance.post('/auth/verify-password-reset-otp', data)
     return res.data // expected { message }
   } catch (err) {
     const msg = err.response?.data?.message || 'Failed to verify OTP'
@@ -100,7 +97,7 @@ export const verifyPasswordResetOTP = createAsyncThunk('auth/verifyPasswordReset
 
 export const sendEmailUpdateOTP = createAsyncThunk('auth/sendEmailUpdateOTP', async (data, { rejectWithValue }) => {
   try {
-    const res = await axios.post(`${api_url}/auth/send-email-update-otp`, data)
+    const res = await axiosInstance.post('/auth/send-email-update-otp', data)
     return res.data // expected { message }
   } catch (err) {
     const msg = err.response?.data?.message || 'Failed to send OTP'
@@ -110,7 +107,7 @@ export const sendEmailUpdateOTP = createAsyncThunk('auth/sendEmailUpdateOTP', as
 
 export const verifyEmailUpdateOTP = createAsyncThunk('auth/verifyEmailUpdateOTP', async (data, { rejectWithValue }) => {
   try {
-    const res = await axios.post(`${api_url}/auth/verify-email-update-otp`, data)
+    const res = await axiosInstance.post('/auth/verify-email-update-otp', data)
     return res.data // expected { message }
   } catch (err) {
     const msg = err.response?.data?.message || 'Failed to verify OTP'
@@ -144,7 +141,7 @@ const authSlice = createSlice({
         state.isAuthenticated = true
         state.user = action.payload?.user || null
         if (typeof localStorage !== 'undefined' && action.payload?.user) {
-          localStorage.setItem('auth_user', JSON.stringify(action.payload.user))
+          localStorage.setItem('auth_user', JSON.stringify  (action.payload.user))
         }
       })
       .addCase(login.rejected, (state, action) => {

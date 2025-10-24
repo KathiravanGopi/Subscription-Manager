@@ -1,11 +1,10 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
-import axios from 'axios'
-import { api_url } from '../config/apiConfig';
+import axiosInstance from '../config/axiosInstance'
 
 
 export const fetchSubs=createAsyncThunk('subscriptions/fetchSubs',async()=>{
     try{
-        const response=await axios.get(`${api_url}/subscriptions`);
+        const response=await axiosInstance.get('/subscriptions');
         // Normalize _id to id for frontend consistency
         return (response.data || []).map(x => ({ id: x._id || x.id, ...x }));
     }catch(error){
@@ -15,7 +14,7 @@ export const fetchSubs=createAsyncThunk('subscriptions/fetchSubs',async()=>{
 
 export const postSubs=createAsyncThunk('subscriptions/postSubs',async(subData)=>{
     try{
-        const response=await axios.post(`${api_url}/subscriptions`,subData);
+        const response=await axiosInstance.post('/subscriptions',subData);
         const x = response.data;
         return { id: x._id || x.id, ...x };
     }catch(error){
@@ -25,7 +24,7 @@ export const postSubs=createAsyncThunk('subscriptions/postSubs',async(subData)=>
 
 export const updateSubs=createAsyncThunk('subscriptions/updateSubs',async({id,subData})=>{
     try{
-        const response=await axios.put(`${api_url}/subscriptions/${id}`,subData);
+        const response=await axiosInstance.put(`/subscriptions/${id}`,subData);
         const x = response.data;
         return { id: x._id || x.id, ...x };
     }catch(error){
@@ -35,7 +34,7 @@ export const updateSubs=createAsyncThunk('subscriptions/updateSubs',async({id,su
 
 export const deleteSubs=createAsyncThunk('subscriptions/deleteSubs',async(id)=>{
     try{
-        await axios.delete(`${api_url}/subscriptions/${id}`);
+        await axiosInstance.delete(`/subscriptions/${id}`);
         return { id };
     }catch(error){
         return Promise.reject(error.response?.data || 'Error deleting subscription');
